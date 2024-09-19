@@ -1,22 +1,22 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/q-micro-services/src",
+  "sourceRoot": "apps/api-gateway/src",
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": "apps/q-micro-services/tsconfig.app.json"
+    "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
   },
   "monorepo": true,
-  "root": "apps/q-micro-services",
+  "root": "apps/api-gateway",
   "projects": {
-    "q-micro-services": {
+    "api-gateway": {
       "type": "application",
-      "root": "apps/q-micro-services",
+      "root": "apps/api-gateway",
       "entryFile": "main",
-      "sourceRoot": "apps/q-micro-services/src",
+      "sourceRoot": "apps/api-gateway/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/q-micro-services/tsconfig.app.json"
+        "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
       }
     },
     "course": {

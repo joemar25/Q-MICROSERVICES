@@ -103,8 +103,99 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
    $  nest generate app course
    ```
 
-   ![alt text](./documentation/003-NewStructure.png)
+   file-structure:
 
-4. A
+      ![alt text](./documentation/003-NewStructure.png)
 
-    b
+   nest-cli.json:
+
+      ![alt text](./documentation/004-NestCliUpdate.png)
+
+4. Renaming for uniform code: From Q-Micro-Service -> api-gateway
+
+   For a proper API naming of the api-gateway that will recieve all the traffice of all the http request in the app by proxing those calls to the microservices using gRPC.
+
+    ![alt text](./documentation/005-Rename.png)
+
+   Note: I still save some of the app name, so you still can search q-microservices
+
+5. Test the courses
+
+   ```bash
+   # you can test to its specific gateway
+   $ pnpm run start:dev course
+   ```
+
+   This will cause an error because of the image below and still listening to both port 3000. We can solve it using gRPC.
+
+   ![alt text](./documentation/006-Error.png)
+
+   So we will install grpc and grpc-tools to generate the proto file and the client for the microservices.
+
+   ```bash
+   # you can test to its specific gateway
+   $ pnpm i --save @nestjs/microservices @grpc/grpc-js @grpc/proto-loader ts-proto
+   ```
+
+   Remove files
+   apps
+   ---- api-gate-way
+   ---- course
+   ---------src
+   ------------ course.controller (remove)
+   ------------ course.service (remove)
+
+   And remove all its import in the course module, then we will use commandline to generate its resouces to perform CRUD.
+
+   ```bash
+   # you can test to its specific gateway
+   $ nest g resource course
+   # then choose course (microservice and y), this will generate files from course folder 
+   ```
+
+6. [Current](https://youtu.be/UkWcjVWs2UQ?t=591)
+
+   protoc --plugin=./node_modules/. bin/protoc-gen-ts_proto --ts_proto_out=./ --ts_proto_opt=nestJs=true ./proto/course.proto
+It seems that `protoc`, the Protocol Buffers compiler, is not installed on your system. You will need to install it to be able to compile `.proto` files. Here’s how you can install and set it up:
+
+### Step 1: Install `protoc`
+
+To install `protoc`, follow the appropriate steps based on your operating system:
+
+#### For Windows (using Chocolatey)
+
+1. Open PowerShell as Administrator.
+2. Run the following command:
+
+   ```bash
+   choco install protoc
+   ```
+
+3. Verify the installation by checking the version:
+
+   ```bash
+   protoc --version
+   ```
+
+### Step 2: Install `ts-proto` and other dependencies
+
+Ensure you have `ts-proto` installed in your project:
+
+```bash
+npm install ts-proto
+```
+
+### Step 3: Generate TypeScript Protobuf Files
+
+Once `protoc` is installed, you should be able to run the command to generate the TypeScript code with `nestJs` options:
+
+```bash
+protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./ --ts_proto_opt=nestJs=true ./proto/course.proto
+```
+
+### Step 4: Verify the Setup
+
+If everything is installed correctly, running `protoc --version` should display the version number, and the generation of TypeScript files should work as expected.
+
+protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./ --ts_proto_opt=nestJs=true ./proto/course.proto
+protoc --plugin=protoc-gen-ts_proto=C:/Users/joema/AppData/Roaming/npm/protoc-gen-ts_proto.cmd --ts_proto_out=./src --ts_proto_opt=nestJs=true ./proto/course.proto

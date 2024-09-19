@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "declaration": false,
-    "outDir": "../../dist/apps/course"
+    "outDir": "../../dist/apps/api-gateway"
   },
   "include": [
     "src/**/*"

@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package course;
+
+message Course {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    string instructor = 4;
+    int32 credits = 5;
+}
+
+message CreateCourseRequest {
+    string name = 1;
+    string description = 2;
+    string instructor = 3;
+    int32 credits = 4;
+}
+
+message UpdateCourseRequest {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    string instructor = 4;
+    int32 credits = 5;
+}
+
+message GetCourseRequest {
+    string id = 1;
+}
+
+message DeleteCourseRequest {
+    string id = 1;
+}
+
+message ListCoursesRequest {}
+
+message ListCoursesResponse {
+    repeated Course courses = 1;
+}
+
+message CourseResponse {
+    Course course = 1;
+}
+
+message PaginationResponse {
+    int32 page = 1;
+    int32 skip = 2;
+}
+
+service CourseService {
+    rpc createCourse(CreateCourseRequest) returns (CourseResponse);
+    rpc findAllCourse(ListCoursesRequest) returns (ListCoursesResponse);
+    rpc findOneCourse(GetCourseRequest) returns (CourseResponse);
+    rpc updateCourse(UpdateCourseRequest) returns (CourseResponse);
+    rpc removeCourse(DeleteCourseRequest) returns (CourseResponse);
+    rpc queryCourse(PaginationResponse) returns (stream Course);
+}
